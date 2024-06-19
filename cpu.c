@@ -1180,7 +1180,6 @@ cpu_run(CPU* c)
     c->interrupt_pending = 0;
     c->iff = 0;
     c->halted = 0;
-
     return execute(c, c->interrupt_vector);
   } else if (c->halted == false) {
     return execute(c, nb(c));
@@ -1218,7 +1217,6 @@ debug_output(CPU* c, bool diss)
   f |= c->pf << 2;
   f |= 1 << 1;
   f |= c->cf << 0;
-
   printf("PC: %04X, AF: %04X, BC: %04X, DE: %04X, HL: %04X, SP: %04X, CYC: %lu",
          c->pc,
          c->a << 8 | f,

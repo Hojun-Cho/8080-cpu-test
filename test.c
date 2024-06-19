@@ -5,6 +5,7 @@
 #include <time.h>
 
 #define MEMORY_SIZE 0x10000
+
 uint8_t memory[MEMORY_SIZE];
 bool done;
 
@@ -50,7 +51,7 @@ out(void* udata, uint8_t port, uint8_t value)
   }
 }
 
-static inline void
+static void
 load_file(char* fname, uint16_t addr)
 {
   FILE* f;
@@ -77,7 +78,7 @@ load_file(char* fname, uint16_t addr)
   fclose(f);
 }
 
-static inline void
+static void
 run_test(char* fname, unsigned long exp)
 {
   long n_ins;
