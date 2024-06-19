@@ -1191,7 +1191,7 @@ void
 cpu_init(CPU* c, void* udata, void* rb, void* wb, void* in, void* out)
 {
   memset(c, 0, sizeof(*c));
-  c->udata = c;
+  c->udata = udata;
   c->rb = rb;
   c->wb = wb;
   c->in = in;
