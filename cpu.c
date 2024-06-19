@@ -390,9 +390,43 @@ xthl(CPU* c)
   set_hl(c, val);
 }
 
+static void
+debug_output(CPU* c, bool diss)
+{
+  uint8_t f;
+
+  f = 0;
+  f |= c->sf << 7;
+  f |= c->zf << 6;
+  f |= c->hf << 4;
+  f |= c->pf << 2;
+  f |= 1 << 1;
+  f |= c->cf << 0;
+  printf("PC: %04X, AF: %04X, BC: %04X, DE: %04X, HL: %04X, SP: %04X, CYC: %lu",
+         c->pc,
+         c->a << 8 | f,
+         get_bc(c),
+         get_de(c),
+         get_hl(c),
+         c->sp,
+         c->cyc);
+  printf("\t(%02X %02X %02X %02X)",
+         rb(c, c->pc),
+         rb(c, c->pc + 1),
+         rb(c, c->pc + 2),
+         rb(c, c->pc + 3));
+  if (diss) {
+    printf(" - %s", op_name[rb(c, c->pc)]);
+  }
+  printf("\n");
+}
+
 static int
 execute(CPU* c, enum OPCODES opcode)
 {
+#ifdef DEBUG
+  debug_output(c, 1);
+#endif
   c->cyc += op_cycles[opcode];
 
   if (c->interrupt_delay > 0)
@@ -1204,36 +1238,4 @@ interrupt(CPU* c, uint8_t opcode)
   c->interrupt_pending = 1;
   c->interrupt_vector = opcode;
 }
-
-void
-debug_output(CPU* c, bool diss)
-{
-  uint8_t f;
-
-  f = 0;
-  f |= c->sf << 7;
-  f |= c->zf << 6;
-  f |= c->hf << 4;
-  f |= c->pf << 2;
-  f |= 1 << 1;
-  f |= c->cf << 0;
-  printf("PC: %04X, AF: %04X, BC: %04X, DE: %04X, HL: %04X, SP: %04X, CYC: %lu",
-         c->pc,
-         c->a << 8 | f,
-         get_bc(c),
-         get_de(c),
-         get_hl(c),
-         c->sp,
-         c->cyc);
-  printf("\t(%02X %02X %02X %02X)",
-         rb(c, c->pc),
-         rb(c, c->pc + 1),
-         rb(c, c->pc + 2),
-         rb(c, c->pc + 3));
-  if (diss) {
-    printf(" - %s", op_name[rb(c, c->pc)]);
-  }
-  printf("\n");
-}
-
 #undef SET_ZSP

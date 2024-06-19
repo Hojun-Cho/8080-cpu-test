@@ -1,5 +1,5 @@
 all:
-	cc -Wall -Wextra cpu.c test.c -o test
+	cc -Wall -Wextra cpu.c test.c -o test -D DEBUG=1
 
 clean:
 	rm test

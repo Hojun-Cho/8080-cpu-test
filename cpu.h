@@ -12,8 +12,6 @@ int
 cpu_run(CPU* c);
 void
 interrupt(CPU* c, uint8_t opcode);
-void
-debug_output(CPU* c, bool diss);
 
 struct CPU
 {
