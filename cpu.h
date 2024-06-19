@@ -8,10 +8,12 @@ typedef struct CPU CPU;
 
 void
 cpu_init(CPU* c, void* udata, void* rb, void* wb, void* in, void* out);
+uint8_t
+cpu_fetch(CPU* c);
 int
-cpu_run(CPU* c);
+cpu_execute(CPU* c, uint8_t opcode);
 void
-interrupt(CPU* c, uint8_t opcode);
+cpu_inter(CPU* c, uint8_t opcode);
 
 struct CPU
 {
@@ -27,9 +29,9 @@ struct CPU
   uint8_t a, b, c, d, e, h, l;
   bool sf, zf, hf, pf, cf, iff;
   bool halted;
-  bool interrupt_pending;
-  uint8_t interrupt_vector;
-  uint8_t interrupt_delay;
+  bool inter_pending;
+  uint8_t inter_vector;
+  uint8_t inter_delay;
 };
 
 #endif

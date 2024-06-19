@@ -83,6 +83,7 @@ run_test(char* fname, unsigned long exp)
 {
   long n_ins;
   CPU c;
+  uint8_t opcode;
 
   printf("*** TEST: %s\n", fname);
   cpu_init(&c, &c, rb, wb, in, out);
@@ -98,7 +99,8 @@ run_test(char* fname, unsigned long exp)
   memory[0x0007] = 0xC9;
   while (!done) {
     n_ins += 1;
-    cpu_run(&c);
+    opcode = cpu_fetch(&c);
+    cpu_execute(&c, opcode);
   }
   printf("\n*** %lu instructions executed on %lu cycles"
          " (expected=%lu, diff=%lld)\n\n",

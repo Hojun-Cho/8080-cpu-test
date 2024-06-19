@@ -421,16 +421,16 @@ debug_output(CPU* c, bool diss)
   printf("\n");
 }
 
-static int
-execute(CPU* c, enum OPCODES opcode)
+int
+cpu_execute(CPU* c, uint8_t opcode)
 {
 #ifdef DEBUG
   debug_output(c, 1);
 #endif
   c->cyc += op_cycles[opcode];
 
-  if (c->interrupt_delay > 0)
-    c->interrupt_delay -= 1;
+  if (c->inter_delay > 0)
+    c->inter_delay -= 1;
 
   switch (opcode) {
     case OP_MOV_A_A:
@@ -834,7 +834,7 @@ execute(CPU* c, enum OPCODES opcode)
       break;
     case OP_EI:
       c->iff = 1;
-      c->interrupt_delay = 1;
+      c->inter_delay = 1;
       break;
     case OP_NOP:
       break;
@@ -1207,16 +1207,16 @@ execute(CPU* c, enum OPCODES opcode)
   return 0;
 }
 
-int
-cpu_run(CPU* c)
+uint8_t
+cpu_fetch(CPU* c)
 {
-  if (c->interrupt_pending && c->iff && c->interrupt_delay == 0) {
-    c->interrupt_pending = 0;
+  if (c->inter_pending && c->iff && c->inter_delay == 0) {
+    c->inter_pending = 0;
     c->iff = 0;
     c->halted = 0;
-    return execute(c, c->interrupt_vector);
+    return c->inter_vector;
   } else if (c->halted == false) {
-    return execute(c, nb(c));
+    return nb(c);
   }
   return -1;
 }
@@ -1233,9 +1233,9 @@ cpu_init(CPU* c, void* udata, void* rb, void* wb, void* in, void* out)
 }
 
 void
-interrupt(CPU* c, uint8_t opcode)
+cpu_inter(CPU* c, uint8_t opcode)
 {
-  c->interrupt_pending = 1;
-  c->interrupt_vector = opcode;
+  c->inter_pending = 1;
+  c->inter_vector = opcode;
 }
 #undef SET_ZSP
