@@ -1,6 +1,5 @@
 #include "cpu.h"
 #include "op.h"
-#include <stdio.h>
 #include <string.h>
 
 #define SET_ZSP(c, val)                                                        \
@@ -424,9 +423,6 @@ debug_output(CPU* c, bool diss)
 int
 cpu_execute(CPU* c, uint8_t opcode)
 {
-#ifdef DEBUG
-  debug_output(c, 1);
-#endif
   c->cyc += op_cycles[opcode];
 
   if (c->inter_delay > 0)
@@ -1210,6 +1206,9 @@ cpu_execute(CPU* c, uint8_t opcode)
 uint8_t
 cpu_fetch(CPU* c)
 {
+#ifdef DEBUG
+  debug_output(c, 1);
+#endif
   if (c->inter_pending && c->iff && c->inter_delay == 0) {
     c->inter_pending = 0;
     c->iff = 0;

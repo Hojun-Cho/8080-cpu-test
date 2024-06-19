@@ -3,6 +3,7 @@
 
 #include <stdbool.h>
 #include <stdint.h>
+#include <stdio.h>
 
 typedef struct CPU CPU;
 
@@ -14,6 +15,8 @@ int
 cpu_execute(CPU* c, uint8_t opcode);
 void
 cpu_inter(CPU* c, uint8_t opcode);
+void
+diss_file(FILE* in, FILE* out, uint16_t pc);
 
 struct CPU
 {

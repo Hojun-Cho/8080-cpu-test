@@ -1,5 +1,5 @@
 #include "cpu.h"
-#include <stdio.h>
+#include "op.h"
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -113,10 +113,11 @@ run_test(char* fname, unsigned long exp)
 int
 main(void)
 {
+  /*FILE *f = fopen("cpu_tests/TST8080.COM", "r");*/
+  /*diss_file(f, stdout, 0x100);*/
   run_test("cpu_tests/TST8080.COM", 4924LU);
   run_test("cpu_tests/CPUTEST.COM", 255653383LU);
   run_test("cpu_tests/8080PRE.COM", 7817LU);
   run_test("cpu_tests/8080EXM.COM", 23803381171LU);
-
   return 0;
 }
