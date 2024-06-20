@@ -1,8 +1,8 @@
 all:
-	cc -Wall -Wextra cpu.c diss.c test.c -o test
+	cc -Wall -Wextra cpu.c diss.c mach.c -I . -o game
 
 debug:
-	cc -Wall -Wextra cpu.c diss.c test.c -o test -D DEBUG=1
+	cc -Wall -Wextra cpu.c diss.c cpu_tests/test.c -I . -o test -D DEBUG=1
 
 clean:
 	rm test
