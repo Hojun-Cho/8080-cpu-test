@@ -1237,4 +1237,19 @@ cpu_inter(CPU* c, uint8_t opcode)
   c->inter_pending = 1;
   c->inter_vector = opcode;
 }
+
+int
+cpu_load(CPU* cpu, const char* fname, uint16_t addr)
+{
+  FILE* f;
+  int c;
+
+  if ((f = fopen(fname, "r")) == 0) {
+    perror("fopen");
+    return -1;
+  }
+  while ((c = fgetc(f)) != EOF)
+    wb(cpu, addr++, (uint8_t)c);
+  return 0;
+}
 #undef SET_ZSP

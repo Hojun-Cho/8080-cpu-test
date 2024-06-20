@@ -52,33 +52,6 @@ out(void* udata, uint8_t port, uint8_t value)
 }
 
 static void
-load_file(char* fname, uint16_t addr)
-{
-  FILE* f;
-  size_t fsz;
-  size_t rc;
-
-  if ((f = fopen(fname, "rb")) == 0) {
-    perror("fopen");
-    exit(1);
-  }
-
-  fseek(f, 0, SEEK_END);
-  fsz = ftell(f);
-  rewind(f);
-  if (fsz + addr >= MEMORY_SIZE) {
-    fprintf(stderr, "%s too large\n", fname);
-    exit(1);
-  }
-
-  if ((rc = fread(&memory[addr], sizeof(uint8_t), fsz, f)) != fsz) {
-    perror("fname");
-    exit(1);
-  }
-  fclose(f);
-}
-
-static void
 run_test(char* fname, unsigned long exp)
 {
   long n_ins;
@@ -88,7 +61,8 @@ run_test(char* fname, unsigned long exp)
   printf("*** TEST: %s\n", fname);
   cpu_init(&c, &c, rb, wb, in, out);
   memset(memory, 0, MEMORY_SIZE);
-  load_file(fname, 0x100);
+  if (cpu_load(&c, fname, 0x100))
+    return;
   n_ins = 0;
   done = 0;
   c.pc = 0x100;

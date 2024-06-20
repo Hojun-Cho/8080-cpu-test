@@ -17,6 +17,8 @@ void
 cpu_inter(CPU* c, uint8_t opcode);
 void
 diss_file(FILE* in, FILE* out, uint16_t pc);
+int
+cpu_load(CPU* cpu, const char* fname, uint16_t addr);
 
 struct CPU
 {
