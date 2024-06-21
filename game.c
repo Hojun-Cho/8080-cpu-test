@@ -1,4 +1,4 @@
-#include "mach.h"
+#include "game.h"
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
@@ -115,6 +115,9 @@ mach_init(Machine* m)
 {
   memset(m, 0, sizeof(Machine));
   cpu_init(&m->cpu, m, rb, wb, in, out);
+  m->inter = OP_RST_1;
+  m->port_1 = 0;
+  m->port_2 = 0;
 }
 
 int
