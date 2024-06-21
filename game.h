@@ -16,7 +16,7 @@ typedef struct Machine Machine;
 #define VIDEO_ADDR 0x2400
 
 void
-mach_init(Machine* m);
+mach_init(Machine* m, void (*update)(Machine*));
 void
 error(const char* fmt, ...);
 void
@@ -33,5 +33,5 @@ struct Machine
   uint8_t shift_offset;
   uint8_t mem[MAX_MEM];
   uint8_t buf[SCREEN_HEIGHT][SCREEN_WIDTH][4];
-  void (*update)(Machine*);
+  void (*update_screen)(Machine*);
 };

@@ -126,11 +126,12 @@ mach_load(Machine* m, const char* fname, uint16_t addr)
 }
 
 void
-mach_init(Machine* m)
+mach_init(Machine* m, void (*update)(Machine*))
 {
   memset(m, 0, sizeof(Machine));
   cpu_init(&m->cpu, m, rb, wb, in, out);
   m->inter = OP_RST_1;
   m->port_1 = 0;
   m->port_2 = 0;
+  m->update_screen = update;
 }
