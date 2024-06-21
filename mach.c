@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define GET_HIGH(x) ((x)&0xff00)
-#define GET_LOW(x) ((x)&0x00ff)
+#define GET_HIGH(x) ((x) & 0xff00)
+#define GET_LOW(x) ((x) & 0x00ff)
 #define SET_HIGH(x, y)                                                         \
   do {                                                                         \
     (x) |= (((uint16_t)y) << 8);                                               \
@@ -36,23 +36,12 @@ panic(const char* fmt, ...)
   exit(1);
 }
 
-static uint16_t
-norm(uint16_t addr)
-{
-  if (addr >= 0x6000)
-    panic("Can't reach memory [%016x]", addr);
-  if (addr >= 0x400 && addr < 0x6000)
-    addr -= 0x2000;
-  return addr;
-}
-
 static uint8_t
 rb(void* udata, uint16_t addr)
 {
   Machine* mach;
 
   mach = udata;
-  addr = norm(addr);
   return mach->mem[addr];
 }
 
@@ -62,9 +51,9 @@ wb(void* udata, uint16_t addr, uint8_t val)
   Machine* mach;
 
   mach = udata;
-  addr = norm(addr);
   mach->mem[addr] = val;
 }
+
 /*
  *Read
  * 00        INPUTS (Mapped in hardware but never used by the code)
