@@ -1,5 +1,5 @@
 all:
-	cc -Wall -Wextra cpu.c diss.c game.c -I . -o game
+	cc -Wall -Wextra cpu.c diss.c game.c main.c -I . -lSDL2 -o game
 
 debug:
 	cc -Wall -Wextra cpu.c diss.c cpu_tests/test.c -I . -o test -D DEBUG=1

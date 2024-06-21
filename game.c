@@ -1,4 +1,5 @@
 #include "game.h"
+#include <SDL2/SDL.h>
 #include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
@@ -111,6 +112,20 @@ out(void* udata, uint8_t port, uint8_t val)
 }
 
 void
+mach_load(Machine* m, const char* fname, uint16_t addr)
+{
+  SDL_RWops* f;
+  Sint64 fsz;
+
+  if ((f = SDL_RWFromFile(fname, "rb")) == 0)
+    panic("Can't open file %s\n", fname);
+  if ((fsz = SDL_RWsize(f)) > MAX_EACH_ROM)
+    panic("Rom file is too large: %d\n", fsz);
+  SDL_RWread(f, &m->mem[addr], 1, fsz);
+  SDL_RWclose(f);
+}
+
+void
 mach_init(Machine* m)
 {
   memset(m, 0, sizeof(Machine));
@@ -118,11 +133,4 @@ mach_init(Machine* m)
   m->inter = OP_RST_1;
   m->port_1 = 0;
   m->port_2 = 0;
-}
-
-int
-main()
-{
-  Machine m;
-  mach_init(&m);
 }
