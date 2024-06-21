@@ -1,5 +1,4 @@
 #include "cpu.h"
-#include "op.h"
 
 void
 diss_file(FILE* in, FILE* out, uint16_t pc)

@@ -1,5 +1,4 @@
 #include "cpu.h"
-#include "op.h"
 #include <string.h>
 
 #define SET_ZSP(c, val)                                                        \
