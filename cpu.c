@@ -712,7 +712,6 @@ daa(CPU* c)
   c->cf = cy;
 }
 
-/* switch de and hl */
 static void
 xchg(CPU* c)
 {
@@ -764,6 +763,7 @@ debug_output(CPU* c, bool diss)
   printf("\n");
 }
 
+/* clang-format off */
 int
 cpu_execute(CPU* c, uint8_t opcode)
 {
@@ -773,779 +773,289 @@ cpu_execute(CPU* c, uint8_t opcode)
     c->inter_delay -= 1;
 
   switch (opcode) {
-    case OP_MOV_A_A:
-      c->a = c->a;
-      break;
-    case OP_MOV_A_B:
-      c->a = c->b;
-      break;
-    case OP_MOV_A_C:
-      c->a = c->c;
-      break;
-    case OP_MOV_A_D:
-      c->a = c->d;
-      break;
-    case OP_MOV_A_E:
-      c->a = c->e;
-      break;
-    case OP_MOV_A_H:
-      c->a = c->h;
-      break;
-    case OP_MOV_A_L:
-      c->a = c->l;
-      break;
-    case OP_MOV_A_M:
-      c->a = rb(c, get_hl(c));
-      break;
+    case OP_MOV_A_A: c->a = c->a; break;
+    case OP_MOV_A_B: c->a = c->b; break;
+    case OP_MOV_A_C: c->a = c->c; break;
+    case OP_MOV_A_D: c->a = c->d; break;
+    case OP_MOV_A_E: c->a = c->e; break;
+    case OP_MOV_A_H: c->a = c->h; break;
+    case OP_MOV_A_L: c->a = c->l; break;
+    case OP_MOV_A_M: c->a = rb(c, get_hl(c)); break;
 
-    case OP_LDAX_B:
-      c->a = rb(c, get_bc(c));
-      break;
-    case OP_LDAX_D:
-      c->a = rb(c, get_de(c));
-      break;
-    case OP_LDA:
-      c->a = rb(c, nw(c));
-      break;
+    case OP_LDAX_B: c->a = rb(c, get_bc(c)); break;
+    case OP_LDAX_D: c->a = rb(c, get_de(c)); break;
+    case OP_LDA: c->a = rb(c, nw(c)); break;
 
-    case OP_MOV_B_A:
-      c->b = c->a;
-      break;
-    case OP_MOV_B_B:
-      c->b = c->b;
-      break;
-    case OP_MOV_B_C:
-      c->b = c->c;
-      break;
-    case OP_MOV_B_D:
-      c->b = c->d;
-      break;
-    case OP_MOV_B_E:
-      c->b = c->e;
-      break;
-    case OP_MOV_B_H:
-      c->b = c->h;
-      break;
-    case OP_MOV_B_L:
-      c->b = c->l;
-      break;
-    case OP_MOV_B_M:
-      c->b = rb(c, get_hl(c));
-      break;
+    case OP_MOV_B_A: c->b = c->a; break;
+    case OP_MOV_B_B: c->b = c->b; break;
+    case OP_MOV_B_C: c->b = c->c; break;
+    case OP_MOV_B_D: c->b = c->d; break;
+    case OP_MOV_B_E: c->b = c->e; break;
+    case OP_MOV_B_H: c->b = c->h; break;
+    case OP_MOV_B_L: c->b = c->l; break;
+    case OP_MOV_B_M: c->b = rb(c, get_hl(c)); break;
 
-    case OP_MOV_C_A:
-      c->c = c->a;
-      break;
-    case OP_MOV_C_B:
-      c->c = c->b;
-      break;
-    case OP_MOV_C_C:
-      c->c = c->c;
-      break;
-    case OP_MOV_C_D:
-      c->c = c->d;
-      break;
-    case OP_MOV_C_E:
-      c->c = c->e;
-      break;
-    case OP_MOV_C_H:
-      c->c = c->h;
-      break;
-    case OP_MOV_C_L:
-      c->c = c->l;
-      break;
-    case OP_MOV_C_M:
-      c->c = rb(c, get_hl(c));
-      break;
+    case OP_MOV_C_A: c->c = c->a; break;
+    case OP_MOV_C_B: c->c = c->b; break;
+    case OP_MOV_C_C: c->c = c->c; break;
+    case OP_MOV_C_D: c->c = c->d; break;
+    case OP_MOV_C_E: c->c = c->e; break;
+    case OP_MOV_C_H: c->c = c->h; break;
+    case OP_MOV_C_L: c->c = c->l; break;
+    case OP_MOV_C_M: c->c = rb(c, get_hl(c)); break;
 
-    case OP_MOV_D_A:
-      c->d = c->a;
-      break;
-    case OP_MOV_D_B:
-      c->d = c->b;
-      break;
-    case OP_MOV_D_C:
-      c->d = c->c;
-      break;
-    case OP_MOV_D_D:
-      c->d = c->d;
-      break;
-    case OP_MOV_D_E:
-      c->d = c->e;
-      break;
-    case OP_MOV_D_H:
-      c->d = c->h;
-      break;
-    case OP_MOV_D_L:
-      c->d = c->l;
-      break;
-    case OP_MOV_D_M:
-      c->d = rb(c, get_hl(c));
-      break;
+    case OP_MOV_D_A: c->d = c->a; break;
+    case OP_MOV_D_B: c->d = c->b; break;
+    case OP_MOV_D_C: c->d = c->c; break;
+    case OP_MOV_D_D: c->d = c->d; break;
+    case OP_MOV_D_E: c->d = c->e; break;
+    case OP_MOV_D_H: c->d = c->h; break;
+    case OP_MOV_D_L: c->d = c->l; break;
+    case OP_MOV_D_M: c->d = rb(c, get_hl(c)); break;
 
-    case OP_MOV_E_A:
-      c->e = c->a;
-      break;
-    case OP_MOV_E_B:
-      c->e = c->b;
-      break;
-    case OP_MOV_E_C:
-      c->e = c->c;
-      break;
-    case OP_MOV_E_D:
-      c->e = c->d;
-      break;
-    case OP_MOV_E_E:
-      c->e = c->e;
-      break;
-    case OP_MOV_E_H:
-      c->e = c->h;
-      break;
-    case OP_MOV_E_L:
-      c->e = c->l;
-      break;
-    case OP_MOV_E_M:
-      c->e = rb(c, get_hl(c));
-      break;
+    case OP_MOV_E_A: c->e = c->a; break;
+    case OP_MOV_E_B: c->e = c->b; break;
+    case OP_MOV_E_C: c->e = c->c; break;
+    case OP_MOV_E_D: c->e = c->d; break;
+    case OP_MOV_E_E: c->e = c->e; break;
+    case OP_MOV_E_H: c->e = c->h; break;
+    case OP_MOV_E_L: c->e = c->l; break;
+    case OP_MOV_E_M: c->e = rb(c, get_hl(c)); break;
 
-    case OP_MOV_H_A:
-      c->h = c->a;
-      break;
-    case OP_MOV_H_B:
-      c->h = c->b;
-      break;
-    case OP_MOV_H_C:
-      c->h = c->c;
-      break;
-    case OP_MOV_H_D:
-      c->h = c->d;
-      break;
-    case OP_MOV_H_E:
-      c->h = c->e;
-      break;
-    case OP_MOV_H_H:
-      c->h = c->h;
-      break;
-    case OP_MOV_H_L:
-      c->h = c->l;
-      break;
-    case OP_MOV_H_M:
-      c->h = rb(c, get_hl(c));
-      break;
+    case OP_MOV_H_A: c->h = c->a; break;
+    case OP_MOV_H_B: c->h = c->b; break;
+    case OP_MOV_H_C: c->h = c->c; break;
+    case OP_MOV_H_D: c->h = c->d; break;
+    case OP_MOV_H_E: c->h = c->e; break;
+    case OP_MOV_H_H: c->h = c->h; break;
+    case OP_MOV_H_L: c->h = c->l; break;
+    case OP_MOV_H_M: c->h = rb(c, get_hl(c)); break;
 
-    case OP_MOV_L_A:
-      c->l = c->a;
-      break;
-    case OP_MOV_L_B:
-      c->l = c->b;
-      break;
-    case OP_MOV_L_C:
-      c->l = c->c;
-      break;
-    case OP_MOV_L_D:
-      c->l = c->d;
-      break;
-    case OP_MOV_L_E:
-      c->l = c->e;
-      break;
-    case OP_MOV_L_H:
-      c->l = c->h;
-      break;
-    case OP_MOV_L_L:
-      c->l = c->l;
-      break;
-    case OP_MOV_L_M:
-      c->l = rb(c, get_hl(c));
-      break;
+    case OP_MOV_L_A: c->l = c->a; break;
+    case OP_MOV_L_B: c->l = c->b; break;
+    case OP_MOV_L_C: c->l = c->c; break;
+    case OP_MOV_L_D: c->l = c->d; break;
+    case OP_MOV_L_E: c->l = c->e; break;
+    case OP_MOV_L_H: c->l = c->h; break;
+    case OP_MOV_L_L: c->l = c->l; break;
+    case OP_MOV_L_M: c->l = rb(c, get_hl(c)); break;
 
-    case OP_MOV_M_A:
-      wb(c, get_hl(c), c->a);
-      break;
-    case OP_MOV_M_B:
-      wb(c, get_hl(c), c->b);
-      break;
-    case OP_MOV_M_C:
-      wb(c, get_hl(c), c->c);
-      break;
-    case OP_MOV_M_D:
-      wb(c, get_hl(c), c->d);
-      break;
-    case OP_MOV_M_E:
-      wb(c, get_hl(c), c->e);
-      break;
-    case OP_MOV_M_H:
-      wb(c, get_hl(c), c->h);
-      break;
-    case OP_MOV_M_L:
-      wb(c, get_hl(c), c->l);
-      break;
+    case OP_MOV_M_A: wb(c, get_hl(c), c->a); break;
+    case OP_MOV_M_B: wb(c, get_hl(c), c->b); break;
+    case OP_MOV_M_C: wb(c, get_hl(c), c->c); break;
+    case OP_MOV_M_D: wb(c, get_hl(c), c->d); break;
+    case OP_MOV_M_E: wb(c, get_hl(c), c->e); break;
+    case OP_MOV_M_H: wb(c, get_hl(c), c->h); break;
+    case OP_MOV_M_L: wb(c, get_hl(c), c->l); break;
 
-    case OP_MVI_A:
-      c->a = nb(c);
-      break;
-    case OP_MVI_B:
-      c->b = nb(c);
-      break;
-    case OP_MVI_C:
-      c->c = nb(c);
-      break;
-    case OP_MVI_D:
-      c->d = nb(c);
-      break;
-    case OP_MVI_E:
-      c->e = nb(c);
-      break;
-    case OP_MVI_H:
-      c->h = nb(c);
-      break;
-    case OP_MVI_L:
-      c->l = nb(c);
-      break;
-    case OP_MVI_M:
-      wb(c, get_hl(c), nb(c));
-      break;
+    case OP_MVI_A: c->a = nb(c); break;
+    case OP_MVI_B: c->b = nb(c); break;
+    case OP_MVI_C: c->c = nb(c); break;
+    case OP_MVI_D: c->d = nb(c); break;
+    case OP_MVI_E: c->e = nb(c); break;
+    case OP_MVI_H: c->h = nb(c); break;
+    case OP_MVI_L: c->l = nb(c); break;
+    case OP_MVI_M: wb(c, get_hl(c), nb(c)); break;
+		case OP_STAX_B: wb(c, get_bc(c), c->a); break;
+    case OP_STAX_D: wb(c, get_de(c), c->a); break;
+    case OP_STA: wb(c, nw(c), c->a); break;
+		case OP_LXI_B: set_bc(c, nw(c)); break;
+    case OP_LXI_D: set_de(c, nw(c)); break;
+    case OP_LXI_H: set_hl(c, nw(c)); break;
+    case OP_LXI_SP: c->sp = nw(c); break;
+    case OP_LHLD: set_hl(c, rw(c, nw(c))); break;
+    case OP_SHLD: ww(c, nw(c), get_hl(c)); break;
+    case OP_SPHL: c->sp = get_hl(c); break;
 
-    case OP_STAX_B:
-      wb(c, get_bc(c), c->a);
-      break;
-    case OP_STAX_D:
-      wb(c, get_de(c), c->a);
-      break;
-    case OP_STA: /* word */
-      wb(c, nw(c), c->a);
-      break;
+    case OP_XCHG: xchg(c); break;
+    case OP_XTHL: xthl(c); break;
 
-    case OP_LXI_B:
-      set_bc(c, nw(c));
-      break;
-    case OP_LXI_D:
-      set_de(c, nw(c));
-      break;
-    case OP_LXI_H:
-      set_hl(c, nw(c));
-      break;
-    case OP_LXI_SP:
-      c->sp = nw(c);
-      break;
-    case OP_LHLD:
-      set_hl(c, rw(c, nw(c)));
-      break;
-    case OP_SHLD:
-      ww(c, nw(c), get_hl(c));
-      break;
-    case OP_SPHL:
-      c->sp = get_hl(c);
-      break;
+    case OP_ADD_A: add(c, &c->a, c->a, 0); break;
+    case OP_ADD_B: add(c, &c->a, c->b, 0); break;
+    case OP_ADD_C: add(c, &c->a, c->c, 0); break;
+    case OP_ADD_D: add(c, &c->a, c->d, 0); break;
+    case OP_ADD_E: add(c, &c->a, c->e, 0); break;
+    case OP_ADD_H: add(c, &c->a, c->h, 0); break;
+    case OP_ADD_L: add(c, &c->a, c->l, 0); break;
+    case OP_ADD_M: add(c, &c->a, rb(c, get_hl(c)), 0); break;
+    case OP_ADI: add(c, &c->a, nb(c), 0); break;
 
-    case OP_XCHG:
-      xchg(c);
-      break;
-    case OP_XTHL:
-      xthl(c);
-      break;
+    case OP_ADC_A: add(c, &c->a, c->a, c->cf); break;
+    case OP_ADC_B: add(c, &c->a, c->b, c->cf); break;
+    case OP_ADC_C: add(c, &c->a, c->c, c->cf); break;
+    case OP_ADC_D: add(c, &c->a, c->d, c->cf); break;
+    case OP_ADC_E: add(c, &c->a, c->e, c->cf); break;
+    case OP_ADC_H: add(c, &c->a, c->h, c->cf); break;
+    case OP_ADC_L: add(c, &c->a, c->l, c->cf); break;
+    case OP_ADC_M: add(c, &c->a, rb(c, get_hl(c)), c->cf); break;
+    case OP_ACI: add(c, &c->a, nb(c), c->cf); break;
 
-    case OP_ADD_A:
-      add(c, &c->a, c->a, 0);
-      break;
-    case OP_ADD_B:
-      add(c, &c->a, c->b, 0);
-      break;
-    case OP_ADD_C:
-      add(c, &c->a, c->c, 0);
-      break;
-    case OP_ADD_D:
-      add(c, &c->a, c->d, 0);
-      break;
-    case OP_ADD_E:
-      add(c, &c->a, c->e, 0);
-      break;
-    case OP_ADD_H:
-      add(c, &c->a, c->h, 0);
-      break;
-    case OP_ADD_L:
-      add(c, &c->a, c->l, 0);
-      break;
-    case OP_ADD_M:
-      add(c, &c->a, rb(c, get_hl(c)), 0);
-      break;
-    case OP_ADI:
-      add(c, &c->a, nb(c), 0);
-      break;
+    case OP_SUB_A: sub(c, &c->a, c->a, 0); break;
+    case OP_SUB_B: sub(c, &c->a, c->b, 0); break;
+    case OP_SUB_C: sub(c, &c->a, c->c, 0); break;
+    case OP_SUB_D: sub(c, &c->a, c->d, 0); break;
+    case OP_SUB_E: sub(c, &c->a, c->e, 0); break;
+    case OP_SUB_H: sub(c, &c->a, c->h, 0); break;
+    case OP_SUB_L: sub(c, &c->a, c->l, 0); break;
+    case OP_SUB_M: sub(c, &c->a, rb(c, get_hl(c)), 0); break;
+    case OP_SUI: sub(c, &c->a, nb(c), 0); break;
 
-    case OP_ADC_A:
-      add(c, &c->a, c->a, c->cf);
-      break;
-    case OP_ADC_B:
-      add(c, &c->a, c->b, c->cf);
-      break;
-    case OP_ADC_C:
-      add(c, &c->a, c->c, c->cf);
-      break;
-    case OP_ADC_D:
-      add(c, &c->a, c->d, c->cf);
-      break;
-    case OP_ADC_E:
-      add(c, &c->a, c->e, c->cf);
-      break;
-    case OP_ADC_H:
-      add(c, &c->a, c->h, c->cf);
-      break;
-    case OP_ADC_L:
-      add(c, &c->a, c->l, c->cf);
-      break;
-    case OP_ADC_M:
-      add(c, &c->a, rb(c, get_hl(c)), c->cf);
-      break;
-    case OP_ACI:
-      add(c, &c->a, nb(c), c->cf);
-      break;
+    case OP_SBB_A: sub(c, &c->a, c->a, c->cf); break;
+    case OP_SBB_B: sub(c, &c->a, c->b, c->cf); break;
+    case OP_SBB_C: sub(c, &c->a, c->c, c->cf); break;
+    case OP_SBB_D: sub(c, &c->a, c->d, c->cf); break;
+    case OP_SBB_E: sub(c, &c->a, c->e, c->cf); break;
+    case OP_SBB_H: sub(c, &c->a, c->h, c->cf); break;
+    case OP_SBB_L: sub(c, &c->a, c->l, c->cf); break;
+    case OP_SBB_M: sub(c, &c->a, rb(c, get_hl(c)), c->cf); break;
+    case OP_SBI: sub(c, &c->a, nb(c), c->cf); break;
 
-    case OP_SUB_A:
-      sub(c, &c->a, c->a, 0);
-      break;
-    case OP_SUB_B:
-      sub(c, &c->a, c->b, 0);
-      break;
-    case OP_SUB_C:
-      sub(c, &c->a, c->c, 0);
-      break;
-    case OP_SUB_D:
-      sub(c, &c->a, c->d, 0);
-      break;
-    case OP_SUB_E:
-      sub(c, &c->a, c->e, 0);
-      break;
-    case OP_SUB_H:
-      sub(c, &c->a, c->h, 0);
-      break;
-    case OP_SUB_L:
-      sub(c, &c->a, c->l, 0);
-      break;
-    case OP_SUB_M:
-      sub(c, &c->a, rb(c, get_hl(c)), 0);
-      break;
-    case OP_SUI:
-      sub(c, &c->a, nb(c), 0);
-      break;
+    case OP_DAD_B: dad(c, get_bc(c)); break;
+    case OP_DAD_D: dad(c, get_de(c)); break;
+    case OP_DAD_H: dad(c, get_hl(c)); break;
+    case OP_DAD_SP: dad(c, c->sp); break;
 
-    case OP_SBB_A:
-      sub(c, &c->a, c->a, c->cf);
-      break;
-    case OP_SBB_B:
-      sub(c, &c->a, c->b, c->cf);
-      break;
-    case OP_SBB_C:
-      sub(c, &c->a, c->c, c->cf);
-      break;
-    case OP_SBB_D:
-      sub(c, &c->a, c->d, c->cf);
-      break;
-    case OP_SBB_E:
-      sub(c, &c->a, c->e, c->cf);
-      break;
-    case OP_SBB_H:
-      sub(c, &c->a, c->h, c->cf);
-      break;
-    case OP_SBB_L:
-      sub(c, &c->a, c->l, c->cf);
-      break;
-    case OP_SBB_M:
-      sub(c, &c->a, rb(c, get_hl(c)), c->cf);
-      break;
-    case OP_SBI:
-      sub(c, &c->a, nb(c), c->cf);
-      break;
+    case OP_DI: c->iff = 0; break;
+    case OP_EI: c->iff = c->inter_delay = 1; break;
+    case OP_NOP: break;
+    case OP_HLT: c->halted = 1; break;
 
-    case OP_DAD_B:
-      dad(c, get_bc(c));
-      break;
-    case OP_DAD_D:
-      dad(c, get_de(c));
-      break;
-    case OP_DAD_H:
-      dad(c, get_hl(c));
-      break;
-    case OP_DAD_SP:
-      dad(c, c->sp);
-      break;
+    case OP_INR_A: c->a = inr(c, c->a); break;
+    case OP_INR_B: c->b = inr(c, c->b); break;
+    case OP_INR_C: c->c = inr(c, c->c); break;
+    case OP_INR_D: c->d = inr(c, c->d); break;
+    case OP_INR_E: c->e = inr(c, c->e); break;
+    case OP_INR_H: c->h = inr(c, c->h); break;
+    case OP_INR_L: c->l = inr(c, c->l); break;
+    case OP_INR_M: wb(c, get_hl(c), inr(c, rb(c, get_hl(c)))); break;
 
-    case OP_DI:
-      c->iff = 0;
-      break;
-    case OP_EI:
-      c->iff = 1;
-      c->inter_delay = 1;
-      break;
-    case OP_NOP:
-      break;
-    case OP_HLT:
-      c->halted = 1;
-      break;
+    case OP_DCR_A: c->a = dcr(c, c->a); break;
+    case OP_DCR_B: c->b = dcr(c, c->b); break;
+    case OP_DCR_C: c->c = dcr(c, c->c); break;
+    case OP_DCR_D: c->d = dcr(c, c->d); break;
+    case OP_DCR_E: c->e = dcr(c, c->e); break;
+    case OP_DCR_H: c->h = dcr(c, c->h); break;
+    case OP_DCR_L: c->l = dcr(c, c->l); break;
+    case OP_DCR_M: wb(c, get_hl(c), dcr(c, rb(c, get_hl(c)))); break;
 
-    case OP_INR_A:
-      c->a = inr(c, c->a);
-      break;
-    case OP_INR_B:
-      c->b = inr(c, c->b);
-      break;
-    case OP_INR_C:
-      c->c = inr(c, c->c);
-      break;
-    case OP_INR_D:
-      c->d = inr(c, c->d);
-      break;
-    case OP_INR_E:
-      c->e = inr(c, c->e);
-      break;
-    case OP_INR_H:
-      c->h = inr(c, c->h);
-      break;
-    case OP_INR_L:
-      c->l = inr(c, c->l);
-      break;
-    case OP_INR_M:
-      wb(c, get_hl(c), inr(c, rb(c, get_hl(c))));
-      break;
+    case OP_INX_B: set_bc(c, get_bc(c) + 1); break;
+    case OP_INX_D: set_de(c, get_de(c) + 1); break;
+    case OP_INX_H: set_hl(c, get_hl(c) + 1); break;
+    case OP_INX_SP: c->sp += 1; break;
 
-    case OP_DCR_A:
-      c->a = dcr(c, c->a);
-      break;
-    case OP_DCR_B:
-      c->b = dcr(c, c->b);
-      break;
-    case OP_DCR_C:
-      c->c = dcr(c, c->c);
-      break;
-    case OP_DCR_D:
-      c->d = dcr(c, c->d);
-      break;
-    case OP_DCR_E:
-      c->e = dcr(c, c->e);
-      break;
-    case OP_DCR_H:
-      c->h = dcr(c, c->h);
-      break;
-    case OP_DCR_L:
-      c->l = dcr(c, c->l);
-      break;
-    case OP_DCR_M:
-      wb(c, get_hl(c), dcr(c, rb(c, get_hl(c))));
-      break;
+    case OP_DCX_B: set_bc(c, get_bc(c) - 1); break;
+    case OP_DCX_D: set_de(c, get_de(c) - 1); break;
+    case OP_DCX_H: set_hl(c, get_hl(c) - 1); break;
+    case OP_DCX_SP: c->sp -= 1; break;
 
-    case OP_INX_B:
-      set_bc(c, get_bc(c) + 1);
-      break;
-    case OP_INX_D:
-      set_de(c, get_de(c) + 1);
-      break;
-    case OP_INX_H:
-      set_hl(c, get_hl(c) + 1);
-      break;
-    case OP_INX_SP:
-      c->sp += 1;
-      break;
+    case OP_DAA: daa(c); break;
+    case OP_CMA: c->a = ~c->a; break;
+    case OP_STC: c->cf = 1; break;
+    case OP_CMC: c->cf = !c->cf; break;
 
-    case OP_DCX_B:
-      set_bc(c, get_bc(c) - 1);
-      break;
-    case OP_DCX_D:
-      set_de(c, get_de(c) - 1);
-      break;
-    case OP_DCX_H:
-      set_hl(c, get_hl(c) - 1);
-      break;
-    case OP_DCX_SP:
-      c->sp -= 1;
-      break;
+    case OP_RLC: rlc(c); break;
+    case OP_RRC: rrc(c); break;
+    case OP_RAL: ral(c); break;
+    case OP_RAR: rar(c); break;
 
-    case OP_DAA:
-      daa(c);
-      break;
-    case OP_CMA:
-      c->a = ~c->a;
-      break;
-    case OP_STC:
-      c->cf = 1;
-      break;
-    case OP_CMC:
-      c->cf = !c->cf;
-      break;
+    case OP_ANA_A: ana(c, c->a); break;
+    case OP_ANA_B: ana(c, c->b); break;
+    case OP_ANA_C: ana(c, c->c); break;
+    case OP_ANA_D: ana(c, c->d); break;
+    case OP_ANA_E: ana(c, c->e); break;
+    case OP_ANA_H: ana(c, c->h); break;
+    case OP_ANA_L: ana(c, c->l); break;
+    case OP_ANA_M: ana(c, rb(c, get_hl(c))); break;
+    case OP_ANI: ana(c, nb(c)); break;
 
-    case OP_RLC:
-      rlc(c);
-      break;
-    case OP_RRC:
-      rrc(c);
-      break;
-    case OP_RAL:
-      ral(c);
-      break;
-    case OP_RAR:
-      rar(c);
-      break;
+    case OP_XRA_A: xra(c, c->a); break;
+    case OP_XRA_B: xra(c, c->b); break;
+    case OP_XRA_C: xra(c, c->c); break;
+    case OP_XRA_D: xra(c, c->d); break;
+    case OP_XRA_E: xra(c, c->e); break;
+    case OP_XRA_H: xra(c, c->h); break;
+    case OP_XRA_L: xra(c, c->l); break;
+    case OP_XRA_M: xra(c, rb(c, get_hl(c))); break;
+    case OP_XRI: xra(c, nb(c)); break;
 
-    case OP_ANA_A:
-      ana(c, c->a);
-      break;
-    case OP_ANA_B:
-      ana(c, c->b);
-      break;
-    case OP_ANA_C:
-      ana(c, c->c);
-      break;
-    case OP_ANA_D:
-      ana(c, c->d);
-      break;
-    case OP_ANA_E:
-      ana(c, c->e);
-      break;
-    case OP_ANA_H:
-      ana(c, c->h);
-      break;
-    case OP_ANA_L:
-      ana(c, c->l);
-      break;
-    case OP_ANA_M:
-      ana(c, rb(c, get_hl(c)));
-      break;
-    case OP_ANI:
-      ana(c, nb(c));
-      break;
+    case OP_ORA_A: ora(c, c->a); break;
+    case OP_ORA_B: ora(c, c->b); break;
+    case OP_ORA_C: ora(c, c->c); break;
+    case OP_ORA_D: ora(c, c->d); break;
+    case OP_ORA_E: ora(c, c->e); break;
+    case OP_ORA_H: ora(c, c->h); break;
+    case OP_ORA_L: ora(c, c->l); break;
+    case OP_ORA_M: ora(c, rb(c, get_hl(c))); break;
+    case OP_ORI: ora(c, nb(c)); break;
 
-    case OP_XRA_A:
-      xra(c, c->a);
-      break;
-    case OP_XRA_B:
-      xra(c, c->b);
-      break;
-    case OP_XRA_C:
-      xra(c, c->c);
-      break;
-    case OP_XRA_D:
-      xra(c, c->d);
-      break;
-    case OP_XRA_E:
-      xra(c, c->e);
-      break;
-    case OP_XRA_H:
-      xra(c, c->h);
-      break;
-    case OP_XRA_L:
-      xra(c, c->l);
-      break;
-    case OP_XRA_M:
-      xra(c, rb(c, get_hl(c)));
-      break;
-    case OP_XRI:
-      xra(c, nb(c));
-      break;
+		case OP_CMP_A: cmp(c, c->a); break;
+    case OP_CMP_B: cmp(c, c->b); break;
+    case OP_CMP_C: cmp(c, c->c); break;
+    case OP_CMP_D: cmp(c, c->d); break;
+    case OP_CMP_E: cmp(c, c->e); break;
+    case OP_CMP_H: cmp(c, c->h); break;
+    case OP_CMP_L: cmp(c, c->l); break;
+    case OP_CMP_M: cmp(c, rb(c, get_hl(c))); break;
+    case OP_CPI: cmp(c, nb(c)); break;
 
-    case OP_ORA_A:
-      ora(c, c->a);
-      break;
-    case OP_ORA_B:
-      ora(c, c->b);
-      break;
-    case OP_ORA_C:
-      ora(c, c->c);
-      break;
-    case OP_ORA_D:
-      ora(c, c->d);
-      break;
-    case OP_ORA_E:
-      ora(c, c->e);
-      break;
-    case OP_ORA_H:
-      ora(c, c->h);
-      break;
-    case OP_ORA_L:
-      ora(c, c->l);
-      break;
-    case OP_ORA_M:
-      ora(c, rb(c, get_hl(c)));
-      break;
-    case OP_ORI:
-      ora(c, nb(c));
-      break;
+    case OP_JMP: jmp(c, nw(c)); break;
+    case OP_JNZ: cond_jmp(c, c->zf == 0); break;
+    case OP_JZ: cond_jmp(c, c->zf == 1); break;
+    case OP_JNC: cond_jmp(c, c->cf == 0); break;
+    case OP_JC: cond_jmp(c, c->cf == 1); break;
+    case OP_JPO: cond_jmp(c, c->pf == 0); break;
+    case OP_JPE: cond_jmp(c, c->pf == 1); break;
+    case OP_JP: cond_jmp(c, c->sf == 0); break;
+    case OP_JM: cond_jmp(c, c->sf == 1); break;
 
-    case OP_CMP_A:
-      cmp(c, c->a);
-      break;
-    case OP_CMP_B:
-      cmp(c, c->b);
-      break;
-    case OP_CMP_C:
-      cmp(c, c->c);
-      break;
-    case OP_CMP_D:
-      cmp(c, c->d);
-      break;
-    case OP_CMP_E:
-      cmp(c, c->e);
-      break;
-    case OP_CMP_H:
-      cmp(c, c->h);
-      break;
-    case OP_CMP_L:
-      cmp(c, c->l);
-      break;
-    case OP_CMP_M:
-      cmp(c, rb(c, get_hl(c)));
-      break;
-    case OP_CPI:
-      cmp(c, nb(c));
-      break;
+    case OP_PCHL: c->pc = get_hl(c); break;
+    case OP_CALL: call(c, nw(c)); break;
 
-    case OP_JMP:
-      jmp(c, nw(c));
-      break;
-    case OP_JNZ:
-      cond_jmp(c, c->zf == 0);
-      break;
-    case OP_JZ:
-      cond_jmp(c, c->zf == 1);
-      break;
-    case OP_JNC:
-      cond_jmp(c, c->cf == 0);
-      break;
-    case OP_JC:
-      cond_jmp(c, c->cf == 1);
-      break;
-    case OP_JPO:
-      cond_jmp(c, c->pf == 0);
-      break;
-    case OP_JPE:
-      cond_jmp(c, c->pf == 1);
-      break;
-    case OP_JP:
-      cond_jmp(c, c->sf == 0);
-      break;
-    case OP_JM:
-      cond_jmp(c, c->sf == 1);
-      break;
+    case OP_CNZ: cond_call(c, c->zf == 0); break;
+    case OP_CZ: cond_call(c, c->zf == 1); break;
+    case OP_CNC: cond_call(c, c->cf == 0); break;
+    case OP_CC: cond_call(c, c->cf == 1); break;
+    case OP_CPO: cond_call(c, c->pf == 0); break;
+    case OP_CPE: cond_call(c, c->pf == 1); break;
+    case OP_CP: cond_call(c, c->sf == 0); break;
+    case OP_CM: cond_call(c, c->sf == 1); break;
 
-    case OP_PCHL:
-      c->pc = get_hl(c);
-      break;
-    case OP_CALL:
-      call(c, nw(c));
-      break;
+    case OP_RET: ret(c); break;
+    case OP_RNZ: cond_ret(c, c->zf == 0); break;
+    case OP_RZ: cond_ret(c, c->zf == 1); break;
+    case OP_RNC: cond_ret(c, c->cf == 0); break;
+    case OP_RC: cond_ret(c, c->cf == 1); break;
+    case OP_RPO: cond_ret(c, c->pf == 0); break;
+    case OP_RPE: cond_ret(c, c->pf == 1); break;
+    case OP_RP: cond_ret(c, c->sf == 0); break;
+    case OP_RM: cond_ret(c, c->sf == 1); break;
 
-    case OP_CNZ:
-      cond_call(c, c->zf == 0);
-      break;
-    case OP_CZ:
-      cond_call(c, c->zf == 1);
-      break;
-    case OP_CNC:
-      cond_call(c, c->cf == 0);
-      break;
-    case OP_CC:
-      cond_call(c, c->cf == 1);
-      break;
-    case OP_CPO:
-      cond_call(c, c->pf == 0);
-      break;
-    case OP_CPE:
-      cond_call(c, c->pf == 1);
-      break;
-    case OP_CP:
-      cond_call(c, c->sf == 0);
-      break;
-    case OP_CM:
-      cond_call(c, c->sf == 1);
-      break;
+    case OP_RST_0: call(c, 0x00); break;
+    case OP_RST_1: call(c, 0x08); break;
+    case OP_RST_2: call(c, 010); break;
+    case OP_RST_3: call(c, 0x18); break;
+    case OP_RST_4: call(c, 0x20); break;
+    case OP_RST_5: call(c, 0x28); break;
+    case OP_RST_6: call(c, 0x30); break;
+    case OP_RST_7: call(c, 0x38); break;
 
-    case OP_RET:
-      ret(c);
-      break;
-    case OP_RNZ:
-      cond_ret(c, c->zf == 0);
-      break;
-    case OP_RZ:
-      cond_ret(c, c->zf == 1);
-      break;
-    case OP_RNC:
-      cond_ret(c, c->cf == 0);
-      break;
-    case OP_RC:
-      cond_ret(c, c->cf == 1);
-      break;
-    case OP_RPO:
-      cond_ret(c, c->pf == 0);
-      break;
-    case OP_RPE:
-      cond_ret(c, c->pf == 1);
-      break;
-    case OP_RP:
-      cond_ret(c, c->sf == 0);
-      break;
-    case OP_RM:
-      cond_ret(c, c->sf == 1);
-      break;
+    case OP_PUSH_B: push_stack(c, get_bc(c)); break;
+    case OP_PUSH_D: push_stack(c, get_de(c)); break;
+    case OP_PUSH_H: push_stack(c, get_hl(c)); break;
+    case OP_PUSH_PSW: push_psw(c); break;
 
-    case OP_RST_0:
-      call(c, 0x00);
-      break;
-    case OP_RST_1:
-      call(c, 0x08);
-      break;
-    case OP_RST_2:
-      call(c, 010);
-      break;
-    case OP_RST_3:
-      call(c, 0x18);
-      break;
-    case OP_RST_4:
-      call(c, 0x20);
-      break;
-    case OP_RST_5:
-      call(c, 0x28);
-      break;
-    case OP_RST_6:
-      call(c, 0x30);
-      break;
-    case OP_RST_7:
-      call(c, 0x38);
-      break;
+    case OP_POP_B: set_bc(c, pop_stack(c)); break;
+    case OP_POP_D: set_de(c, pop_stack(c)); break;
+    case OP_POP_H: set_hl(c, pop_stack(c)); break;
+    case OP_POP_PSW: pop_psw(c); break;
 
-    case OP_PUSH_B:
-      push_stack(c, get_bc(c));
-      break;
-    case OP_PUSH_D:
-      push_stack(c, get_de(c));
-      break;
-    case OP_PUSH_H:
-      push_stack(c, get_hl(c));
-      break;
-    case OP_PUSH_PSW:
-      push_psw(c);
-      break;
-
-    case OP_POP_B:
-      set_bc(c, pop_stack(c));
-      break;
-    case OP_POP_D:
-      set_de(c, pop_stack(c));
-      break;
-    case OP_POP_H:
-      set_hl(c, pop_stack(c));
-      break;
-    case OP_POP_PSW:
-      pop_psw(c);
-      break;
-
-    case OP_IN:
-      c->a = c->in(c->udata, nb(c));
-      break;
-    case OP_OUT:
-      c->out(c->udata, nb(c), c->a);
-      break;
-    default:
-      return -1;
+    case OP_IN: c->a = c->in(c->udata, nb(c)); break;
+    case OP_OUT: c->out(c->udata, nb(c), c->a); break;
+    default: return -1;
   }
   return 0;
 }
+/* clang-format on */
 
 uint8_t
 cpu_fetch(CPU* c)
